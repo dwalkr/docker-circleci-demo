@@ -21,6 +21,7 @@ jobs:
       - add_ssh_keys:
           fingerprints: ## Provide fingerprints for needed SSH keys
             - "01:8d:34:59:c1:72:6a:a8:77:ce:a4:67:a5:58:89:9f"
+      - run: echo $QQQIO_KEYSCAN >> ~/.ssh/known_hosts
       - deploy:
           name: deploy
           command: |
