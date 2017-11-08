@@ -20,16 +20,16 @@ jobs:
           command: htmlproofer $HUGO_BUILD_DIR --allow-hash-href --check-html --empty-alt-ignore --disable-external
       - add_ssh_keys:
           fingerprints: ## Provide fingerprints for needed SSH keys
-            - "{{ ssh_fingerprint }}"
+            - "01:8d:34:59:c1:72:6a:a8:77:ce:a4:67:a5:58:89:9f"
       - deploy:
           name: deploy
           command: |
             if [ "${CIRCLE_BRANCH}" = "master" ]; then
               # aws s3 example
-              aws s3 sync $HUGO_BUILD_DIR s3://{{ s3_bucket_name }}/{{ s3_path }} --delete
+              aws s3 sync $HUGO_BUILD_DIR s3://dwalkr-hugo-demo/ --delete
 
               # rsync example
-              rsync -av --progress -e ssh $HUGO_BUILD_DIR {{ ssh_user }}@{{ ssh_hostname }}:{{ ssh_path }}
+              # rsync -av --progress -e ssh $HUGO_BUILD_DIR {{ ssh_user }}@{{ ssh_hostname }}:{{ ssh_path }}
             else
               echo "Not master branch, dry run only"
             fi
