@@ -1,0 +1,35 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: cibuilds/hugo:latest ## Pre-built image with Hugo
+    working_directory: ~/hugo ## Sets the working directory in docker
+    environment: ## Pass environment variables to the docker container
+      HUGO_BUILD_DIR: ~/hugo/public ## Sets the Hugo build directory
+    steps:
+      - run: apk update && apk add git
+      - checkout ## Checkout the git repository
+      - run: git submodule sync && git submodule update --init ## Checkout submodules
+      - run: apk add --update python python-dev py-pip build-base ## Update python
+      - run: pip install awscli ## Install AWS CLI
+      - run: ## Run Hugo
+          name: "Run Hugo"
+          command: HUGO_ENV=production hugo -v -d $HUGO_BUILD_DIR
+      - run: ## Example Test
+          name: "Test Website"
+          command: htmlproofer $HUGO_BUILD_DIR --allow-hash-href --check-html --empty-alt-ignore --disable-external
+      - add_ssh_keys:
+          fingerprints: ## Provide fingerprints for needed SSH keys
+            - "{{ ssh_fingerprint }}"
+      - deploy:
+          name: deploy
+          command: |
+            if [ "${CIRCLE_BRANCH}" = "master" ]; then
+              # aws s3 example
+              aws s3 sync $HUGO_BUILD_DIR s3://{{ s3_bucket_name }}/{{ s3_path }} --delete
+
+              # rsync example
+              rsync -av --progress -e ssh $HUGO_BUILD_DIR {{ ssh_user }}@{{ ssh_hostname }}:{{ ssh_path }}
+            else
+              echo "Not master branch, dry run only"
+            fi
