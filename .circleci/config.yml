@@ -26,10 +26,10 @@ jobs:
           command: |
             if [ "${CIRCLE_BRANCH}" = "master" ]; then
               # aws s3 example
-              aws s3 sync $HUGO_BUILD_DIR s3://dwalkr-hugo-demo/ --delete
+              #aws s3 sync $HUGO_BUILD_DIR s3://dwalkr-hugo-demo/ --delete
 
               # rsync example
-              # rsync -av --progress -e ssh $HUGO_BUILD_DIR {{ ssh_user }}@{{ ssh_hostname }}:{{ ssh_path }}
+              rsync -av --progress -e ssh $HUGO_BUILD_DIR dj@qqqq.io:/home/dj/circleci-test
             else
               echo "Not master branch, dry run only"
             fi
