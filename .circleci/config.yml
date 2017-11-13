@@ -1,6 +1,6 @@
 version: 2
 jobs:
-  build_test_deploy:
+  build:
     docker:
       - image: cibuilds/hugo:latest
     working_directory: ~/hugo
