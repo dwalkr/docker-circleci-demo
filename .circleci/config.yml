@@ -1,33 +1,24 @@
 version: 2
 jobs:
-  build:
+  build_test_deploy:
     docker:
-      - image: cibuilds/hugo:latest ## Pre-built image with Hugo
-    working_directory: ~/hugo ## Sets the working directory in docker
-    environment: ## Pass environment variables to the docker container
-      HUGO_BUILD_DIR: ~/hugo/public ## Sets the Hugo build directory
+      - image: cibuilds/hugo:latest
+    working_directory: ~/hugo
+    environment:
+      HUGO_BUILD_DIR: ~/hugo/public
     steps:
       - run: apk update && apk add git
-      - checkout ## Checkout the git repository
-      - run: git submodule sync && git submodule update --init ## Checkout submodules
-      - run: apk add --update python python-dev py-pip build-base ## Update python
-      - run: pip install awscli ## Install AWS CLI
-      - run: ## Run Hugo
-          name: "Run Hugo"
-          command: HUGO_ENV=production hugo -v -d $HUGO_BUILD_DIR
-      - run: ## Example Test
-          name: "Test Website"
-          command: htmlproofer $HUGO_BUILD_DIR --allow-hash-href --check-html --empty-alt-ignore --disable-external
-      - run: echo $QQQIO_KEYSCAN >> ~/.ssh/known_hosts
+      - checkout
+      - run: git submodule sync && git submodule update --init
+      - run: apk add --update python python-dev py-pip build-base
+      - run: pip install awscli
+      - run: HUGO_ENV=production hugo -v -d $HUGO_BUILD_DIR
+      - run: htmlproofer $HUGO_BUILD_DIR --allow-hash-href --check-html --empty-alt-ignore --disable-external
       - deploy:
           name: deploy
           command: |
             if [ "${CIRCLE_BRANCH}" = "master" ]; then
-              # aws s3 example
               aws s3 sync $HUGO_BUILD_DIR s3://dwalkr-hugo-demo/ --delete
-
-              # rsync example
-              #rsync -av --progress -e ssh $HUGO_BUILD_DIR ubuntu@qqqq.io:/home/ubuntu/circleci-test
             else
               echo "Not master branch, dry run only"
             fi
