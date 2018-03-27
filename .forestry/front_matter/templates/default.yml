@@ -1,6 +1,4 @@
 ---
-pages:
-- blog/test-post.md
 hide_body: false
 fields:
 - name: title
