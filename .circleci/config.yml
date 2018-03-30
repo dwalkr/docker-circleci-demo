@@ -10,7 +10,7 @@ jobs:
       - run: apk update && apk add git
       - checkout
       - run: git submodule sync && git submodule update --init
-      - run: go get -v github.com/bep/s3deploy
+      - run: curl https://github.com/bep/s3deploy/releases/download/v2.0.1/s3deploy_2.0.1_Linux-64bit.tar.gz | tar xvz
       - run: HUGO_ENV=production hugo -v -d $HUGO_BUILD_DIR
       - run: htmlproofer $HUGO_BUILD_DIR --allow-hash-href --check-html --empty-alt-ignore --disable-external
       - deploy:
