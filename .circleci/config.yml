@@ -17,7 +17,7 @@ jobs:
           name: deploy
           command: |
             if [ "${CIRCLE_BRANCH}" = "master" ]; then
-              ./s3deploy $HUGO_BUILD_DIR -region=us-east-1 -bucket=dwalkr-hugo-demo
+              ./s3deploy -source=$HUGO_BUILD_DIR -region=us-east-1 -bucket=dwalkr-hugo-demo
             else
               echo "Not master branch, dry run only"
             fi
