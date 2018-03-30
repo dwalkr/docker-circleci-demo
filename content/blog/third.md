@@ -1,17 +1,15 @@
 +++
 categories = ["propaganda"]
 comments = false
-date = "2016-10-03T16:59:13-04:00"
-draft = false
-showpagemeta = true
+date = "2016-10-03T20:59:13+00:00"
+description = "Middle out compression technology for the win!"
 showcomments = false
+showpagemeta = true
 slug = ""
 tags = ["gavin", "belson", "hooli"]
-title = "Hooli’s Hot New Hardware"
-description = "Middle out compression technology for the win!"
+title = "Hooli’s Hot New Hardware******"
 
 +++
-
 Note: This article originally appeared in [CodeRag](http://www.coderag.com/hoolis-hot-new-hardware/).
 
 When Hooli acquired Endframe, no one could wait to see what the tech giant would do with the revolutionary, middle-out compression technology. The wait is over: In a savvy pivot, Hooli took the software and created their newest hardware: the Hooli/Endframe Box. While initially conceived as a consumer-facing platform, the Endframe technology has been repurposed to “make the world a better place through secure, high-capacity enterprise data storage servers utilizing middle-out compression technology.”
