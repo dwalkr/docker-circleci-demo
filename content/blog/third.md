@@ -7,7 +7,9 @@ showcomments = false
 showpagemeta = true
 slug = ""
 tags = ["gavin", "belson", "hooli"]
-title = "Hooli’s Hot New Hardware******"
+title = "Hooli’s Hot New Hardware"
+
+TEST 
 
 +++
 Note: This article originally appeared in [CodeRag](http://www.coderag.com/hoolis-hot-new-hardware/).
