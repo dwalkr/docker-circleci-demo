@@ -21,4 +21,15 @@ jobs:
             else
               echo "Not master branch, dry run only"
             fi
-      # https://docs.aws.amazon.com/general/latest/gr/rande.html#s3_region
+workflows:
+  version: 2
+  autopublish:
+    triggers:
+      - schedule:
+          cron: "0 * * * *"
+          filters:
+            branches:
+              only:
+                - master
+    jobs:
+      - build
